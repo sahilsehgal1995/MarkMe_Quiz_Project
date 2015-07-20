@@ -1,0 +1,20 @@
+{% extends "header.html"%}
+
+{% block body %}
+<img src="{{url_for('static', filename='images/pagenotfound.jpeg')}}">
+<h1>
+Page Not found!
+</h1>
+<br>
+<p>
+Error Message:
+{{ error }}
+<a href="/dashboard/">
+<button type="button" class="btn btn-success"  aria-expanded="false">
+    
+    Go Back
+  </button>
+  </a>
+</p>
+
+{% endblock %}

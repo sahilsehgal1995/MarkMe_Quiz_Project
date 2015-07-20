@@ -1,0 +1,36 @@
+{% extends "header.html" %}
+{% block body %}
+<body>
+  <div class="container">
+  <h4>Question entry</h4>
+  <br>
+  <form method="POST" action="/questions/" autocomplete="on">
+    <p style="font-size:120%; color:purple;%">Question number</p>
+    <input type="text"  cols="40" rows="3" placeholder="Question Number" name="qno" value="{{request.form.qno}}">
+    <p>Question</p>
+    <input type="text" class="form-control" placeholder="Question" name="question" value="{{request.form.question}}">
+    <br>
+    <p>Option A</p>
+    <input type="text" class="form-control" placeholder="Option 1" name="option1" value="{{request.form.option1}}">
+    <br>
+    <p>Option B</p>
+    <input type="text" class="form-control" placeholder="Option 2" name="option2" value="{{request.form.option2}}">
+    <br>
+    <p>Option C</p>
+    <input type="text" class="form-control" placeholder="Option 3" name="option3" value="{{request.form.option3}}">
+    <br>
+    <p>Option D</p>
+    <input type="text" class="form-control" placeholder="Option 4" name="option4" value="{{request.form.option4}}">
+    <br>
+    <p>Correct Answer</p>
+    <input type="text" class="form-control" placeholder="Correct Answer" name="correct_answer" value="{{request.form.correct_answer}}">
+    <br>
+    <br>
+    <input class="btn btn-default" type="submit" value="Submit">
+
+     </form>
+  {% if error %}
+    <p class="error"><strong> Error:</strong>{{error}}</p>
+  {% endif %}
+</body>
+{% endblock %}

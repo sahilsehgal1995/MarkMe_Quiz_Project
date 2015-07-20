@@ -1,0 +1,103 @@
+{% extends "header.html" %}
+
+{% block head %}
+
+<style>
+#nav {
+    line-height:30px;
+    background-color:#F0F0F0 ;
+    padding:5px;
+    float: left;	
+    margin: 5px;      
+}
+#questionButtons {
+    line-height:30px;
+    background-color:#F0F0F0 ;
+    padding:5px;
+    float: left;	
+    margin: 5px;      
+}
+
+#ques {
+    width:80%;
+    float:left;
+    padding:10px;	 	 
+}
+
+#footer {
+    color:black;
+    clear:both;
+    text-align:center;
+    padding:5px;
+}
+
+#rightBox {
+	float:left;
+	background-color:lightgreen;
+	border:4px  solid navy;
+	width:20%
+}
+#TimerDivision {
+    background-color: lightyellow;
+    padding: 25px;
+    border: 5px solid navy;
+    margin: 15px;
+}
+</style>
+
+{% endblock %}
+
+{% block body %}
+
+<div id="main" style="width: 100%; overflow:auto;">
+	<div id="nav" style="float:left; width:70%;">
+		<div class="btn-group-vertical" id="questionButtons" role="group" aria-label="..." style="visibility: hidden;">
+	 		 <button type="button" class="btn btn-default" onclick="questionChange('question_1')">Question 1</button>
+	 		 <button type="button" class="btn btn-default" onclick="questionChange('question_2')">Question 2</button>
+	 		 <button type="button" class="btn btn-default" onclick="questionChange('question_3')">Question 3</button>
+			 <button type="button" class="btn btn-default" onclick="questionChange('question_4')">Question 4</button>
+	  		 <button type="button" class="btn btn-default" onclick="questionChange('question_5')">Question 5</button>
+	 		 <button type="button" class="btn btn-default" onclick="questionChange('question_6')">Question 6</button>
+	  		 <button type="button" class="btn btn-default" onclick="questionChange('question_7')">Question 7</button>
+	 		 <button type="button" class="btn btn-default" onclick="questionChange('question_8')">Question 8</button>
+	   		 <button type="button" class="btn btn-default" onclick="questionChange('question_9')">Question 9</button>
+	  		 <button type="button" class="btn btn-default" onclick="questionChange('question_10')">Question 10</button>
+		</div>
+
+
+		<div id="ques" style="visibility: hidden;">
+			 <form method="POST">
+				<p id="question" style="font-size:120%; color:purple;%">
+				Question number {{qno}}:<nbsp> {{question}}
+				</p>
+				<input type="radio" name="option" value="{{option1}}"> <span id="option1">{{option1}}</span>
+				<br>
+				<input type="radio" name="option" value="{{option2}}"> <span id="option2"> {{option2}}</span>
+	   		    <br>
+				<input type="radio" name="option" value="{{option3}}"> <span id="option3">{{option3}}</span>
+				<br>
+				<input type="radio" name="option" value="{{option4}}"> <span id="option4">{{option4}}</span>
+				<br>
+				<input class="btn btn-default" type="button" onclick="markAnswerClicked()" value="Mark Answer">
+			 </form>
+		</div>
+		<div id="footer">
+			<button type="button" onclick="startButtonClicked()" id="startButton" style="visibility: visible;">
+			Start test
+			</button>
+			
+			<button type="button" id="finishButton" onclick="finishTest()" style="visibility: hidden;">
+			Finish test
+			</button>
+		</div>
+	</div>
+	
+	<div id="rightBox" >
+		<h4>Remaining Time</h4>
+		<div id="TimerDivision"><p id="Timer">Timer to be started</p></div>
+	</div>
+
+</div>
+<script src="{{ url_for('static', filename='js/test.js') }}">
+</script>
+{% endblock %}

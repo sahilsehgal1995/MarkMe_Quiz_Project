@@ -1,0 +1,27 @@
+{% extends "header.html" %}
+{% block body %}
+<div role="tabpanel">
+
+<div role="tabpanel">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#basics" aria-controls="basics" role="tab" data-toggle="tab">Questioms</a></li>
+    <li role="presentation"><a href="#advanced" aria-controls="advanced" role="tab" data-toggle="tab">Advanced</a></li>
+    <li role="presentation"><a href="#practice" aria-controls="practice" role="tab" data-toggle="tab">Practice</a></li>
+    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade in active" id="basics"><p><a href="/questions/">Question entry</a></p></div>
+    <div role="tabpanel" class="tab-pane fade" id="advanced"><p>Advanced Learning</p></div>
+    <div role="tabpanel" class="tab-pane fade" id="practice"><p>Practice more</p></div>
+    <div role="tabpanel" class="tab-pane fade" id="settings"><p>Custom Settings</p></div>
+  </div>
+
+</div>
+
+
+</div>
+{% endblock %}
