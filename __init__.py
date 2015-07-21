@@ -97,21 +97,26 @@ def question_set():
 
 
 @app.route('/test/', methods=['GET','POST'])
+@login_required
 def taketest():
   try:
-    x = test(1)
     form = questions(request.form)
-    return render_template("test.html", qno=x[0], question=x[1], option1=x[2], option2=x[3], option3=x[4], option4=x[5], correct_answer=x[6])
+    return render_template("test.html")
   
   except Exception as e:
     return (str(e))
   
-@app.route('/scoreSubmission/', methods=['POST'])
+@app.route('/scoresubmission/', methods=['GET','POST'])
+@login_required
 def scoreSubmission():
   try:
-    score = request.args.get('score')
-    username = request.args.get('username')
-    return render_template("testCompletion.html")
+    if request.method == 'POST':
+      session['score'] = request.args.get('score')
+      session['username'] = request.args.get('username')
+      return score + " "+ username
+    
+    if request.method == 'GET':
+      return render_template("testCompletion.html")
   
   except Exception as e:
     return (str(e))

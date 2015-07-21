@@ -4,7 +4,8 @@ var optionsMarked = {};
 var timeLeft = new Date();
 var correctAnswer;
 var questionButtonList = {}, responses = {};
-var currentQuestion="question_1";
+var currentQuestion;
+var timer;
 
 function questionListGeneration()
  {
@@ -16,17 +17,16 @@ function questionListGeneration()
     {
       var x=rand.toString();
       array.push(rand);
-      var string = "question_" + i.toString();
+      var string = "Question " + i.toString();
       questionNumbers[string] = rand;
       optionsMarked[string]="unMarked";
       questionButtonList[string] = "button_" + i.toString();
       responses[string] = "Wrong Answer";
       i++;
     }
-   }
-   
-   questionChange("question_1");
-   
+   }  
+   currentQuestion = "Question 1"
+   questionChange(currentQuestion);
 }
 
 function optionUpdationOnForm()
@@ -68,7 +68,8 @@ function questionChange(questionId)
     if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
       var myArr = JSON.parse(xmlhttp.responseText);
-      document.getElementById("question").innerHTML = myArr.question;
+      currentQuestion=questionId;
+      document.getElementById("question").innerHTML = currentQuestion + ": " + myArr.question;
       document.getElementById("option1").innerHTML = myArr.option1;
       document.getElementById("option2").innerHTML = myArr.option2;
       document.getElementById("option3").innerHTML = myArr.option3;
@@ -79,7 +80,6 @@ function questionChange(questionId)
       option[1].value=myArr.option2;
       option[2].value=myArr.option3;
       option[3].value=myArr.option4;
-      currentQuestion=questionId;
       optionUpdationOnForm();
     }
   }
@@ -96,11 +96,12 @@ function scoreSubmission(score)
   {
     if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
-      alert(xmlhttp.responseText);
+     // alert(xmlhttp.responseText);
+      window.location.href="/scoresubmission/";
     }
   }
   //var my = document.getElementById("user").innerHTML;
-  var url = "/scoreSubmission/?username="+ document.getElementById("user").innerHTML + "&score="+ score.toString();
+  var url = "/scoresubmission/?username="+ document.getElementById("user").innerHTML + "&score="+ score.toString();
   xmlhttp.open("POST",url, true);
   xmlhttp.send();
 }
@@ -110,12 +111,11 @@ function startButtonClicked()
 	timeLeft.setHours(0);
 	timeLeft.setMinutes(0);
 	timeLeft.setSeconds(10);
-	currentQuestion="question_1";
 	document.getElementById("endButton").style.visibility='visible';
 	document.getElementById("ques").style.visibility='visible';
 	document.getElementById("questionButtons").style.visibility='visible';
 	document.getElementById("startButton").style.visibility='hidden';
-	var timer = setInterval(function(){timeUpdation()}, 1000);
+	timer = setInterval(function(){timeUpdation()}, 1000);
 }
 
 function endTest()
@@ -127,7 +127,7 @@ function endTest()
 	    score++;
 	}
 	scoreSubmission(score);
-	clearInterval(timer);
+	clearTimeout(timer);
 }
 
 function timeUpdation()

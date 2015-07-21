@@ -52,31 +52,29 @@
 <div id="main" style="width: 100%; overflow:auto;">
 	<div id="nav" style="float:left; width:70%;">
 		<div class="btn-group-vertical" id="questionButtons" role="group" aria-label="..." style="visibility: hidden;">
-	 		 <button type="button" class="btn btn-default" id="button_1" onclick="questionChange('question_1')">Question 1</button>
-	 		 <button type="button" class="btn btn-default" id="button_2" onclick="questionChange('question_2')">Question 2</button>
-	 		 <button type="button" class="btn btn-default" id="button_3" onclick="questionChange('question_3')">Question 3</button>
-			 <button type="button" class="btn btn-default" id="button_4" onclick="questionChange('question_4')">Question 4</button>
-	  		 <button type="button" class="btn btn-default" id="button_5" onclick="questionChange('question_5')">Question 5</button>
-	 		 <button type="button" class="btn btn-default" id="button_6" onclick="questionChange('question_6')">Question 6</button>
-	  		 <button type="button" class="btn btn-default" id="button_7" onclick="questionChange('question_7')">Question 7</button>
-	 		 <button type="button" class="btn btn-default" id="button_8" onclick="questionChange('question_8')">Question 8</button>
-	   		 <button type="button" class="btn btn-default" id="button_9" onclick="questionChange('question_9')">Question 9</button>
-	  		 <button type="button" class="btn btn-default" id="button_10" onclick="questionChange('question_10')">Question 10</button>
+	 		 <button type="button" class="btn btn-default" id="button_1" onclick="questionChange('Question 1')">Question 1</button>
+	 		 <button type="button" class="btn btn-default" id="button_2" onclick="questionChange('Question 2')">Question 2</button>
+	 		 <button type="button" class="btn btn-default" id="button_3" onclick="questionChange('Question 3')">Question 3</button>
+			 <button type="button" class="btn btn-default" id="button_4" onclick="questionChange('Question 4')">Question 4</button>
+	  		 <button type="button" class="btn btn-default" id="button_5" onclick="questionChange('Question 5')">Question 5</button>
+	 		 <button type="button" class="btn btn-default" id="button_6" onclick="questionChange('Question 6')">Question 6</button>
+	  		 <button type="button" class="btn btn-default" id="button_7" onclick="questionChange('Question 7')">Question 7</button>
+	 		 <button type="button" class="btn btn-default" id="button_8" onclick="questionChange('Question 8')">Question 8</button>
+	   		 <button type="button" class="btn btn-default" id="button_9" onclick="questionChange('Question 9')">Question 9</button>
+	  		 <button type="button" class="btn btn-default" id="button_10" onclick="questionChange('Question 10')">Question 10</button>
 		</div>
 
 
 		<div id="ques" style="visibility: hidden;">
 			 <form method="POST">
-				<p id="question" style="font-size:120%; color:purple;%">
-				Question number {{qno}}:<nbsp> {{question}}
-				</p>
-				<input type="radio" name="option" value="{{option1}}"> <span id="option1">{{option1}}</span>
+				<p id="question" style="font-size:120%; color:purple;%"></p>
+				<input type="radio" name="option" value="{{option1}}"> <span id="option1"></span>
 				<br>
-				<input type="radio" name="option" value="{{option2}}"> <span id="option2"> {{option2}}</span>
+				<input type="radio" name="option" value="{{option2}}"> <span id="option2"></span>
 	   		    <br>
-				<input type="radio" name="option" value="{{option3}}"> <span id="option3">{{option3}}</span>
+				<input type="radio" name="option" value="{{option3}}"> <span id="option3"></span>
 				<br>
-				<input type="radio" name="option" value="{{option4}}"> <span id="option4">{{option4}}</span>
+				<input type="radio" name="option" value="{{option4}}"> <span id="option4"></span>
 				<br>
 				<input class="btn btn-default" type="button" onclick="markAnswerClicked()" value="Mark Answer">
 			 </form>
