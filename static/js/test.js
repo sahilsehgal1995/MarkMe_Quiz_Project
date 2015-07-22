@@ -144,9 +144,10 @@ function timeUpdation()
 	
 	if (seconds<10)
 		seconds = "0" + seconds.toString();
-	document.getElementById("Timer").innerHTML = hours +" : " +
-												 minutes + " : " +
-												 seconds ;
+	document.getElementById("Timer").innerHTML = hours +" hh : " +
+												 minutes + " mm : " +
+												 seconds + " ss";
+	
 	
 	if((timeLeft.getHours())==0 && (timeLeft.getMinutes()==0) && (timeLeft.getSeconds()==0))
 		{
@@ -157,6 +158,8 @@ function timeUpdation()
 		{
 			var myvar = document.getElementById("Timer");
 			myvar.innerHTML = ""+myvar.innerHTML + "";
+// 			$("#Timer").animate({ opacity: 'toggle'}).css("color", "red");
+			$("#Timer").toggleClass("TimerClass");
 		}
 
 	timeLeft.setSeconds(timeLeft.getSeconds()-1);
