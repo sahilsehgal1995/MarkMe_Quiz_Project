@@ -90,10 +90,10 @@ def question_set():
     if request.method=='POST' and form.validate():
       databaseReply = questionEntry(form.qno.data, form.question.data, form.option1.data, form.option2.data, form.option3.data, form.option4.data, form.correct_answer.data)
       flash(databaseReply)
-      return render_template('question.html', form = form)
+      return redirect(url_for('question_set'))
     else:
       flash("Enter question")
-      return render_template('question.html', form = form)
+      return render_template('question.html')
     
   except Exception as e:
     return (str(e))
@@ -173,5 +173,17 @@ def ajax(question_id):
   except Exception as e:
     return str(e)
   
+@app.route('/createtest/', methods=['GET','POST'])
+def createTest():
+  try:
+    if request.method == 'POST':
+      return redirect('/questions/')
+    
+    return render_template("createTest.html")
+  
+  except Exception as e:
+    return str(e)
+
+
 if __name__=='__main__':
   app.run()

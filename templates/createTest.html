@@ -1,0 +1,29 @@
+{% extends "header.html" %}
+{% block head %}
+{% endblock %}
+{% block body %}
+<p>Welcome to create Test Page.</p>
+<form action="/createtest/" method="POST" name="form1">
+  <p id="testName">
+    <label class="form-field-title" for="testName" style="font-size:120%; color:purple;%">Test Name:</label>
+    <input type="text" id="testName" cols="20" rows="3" placeholder="Name of the Test" name="testName" value="">      
+    <br><br>
+
+     <label class="form-field-title" for="startDate" style="font-size:120%; color:purple;%">Start Date:</label>
+    <input type="date" id="startDate" cols="20" rows="3" placeholder="Enter the date on which test to be started" name="startDate" value="">
+    <br><br>
+     <label class="form-field-title" for="startTime" style="font-size:120%; color:purple;%">Start Time:</label>
+    <input type="time" id="startTime" cols="20" rows="3" placeholder="" name="startDate" value="">
+    <br><br>
+    <label class="form-field-title" for="noOfHours" style="font-size:120%; color:purple;%">Number of hours:</label>
+    <input type="text" id="noOfHours" cols="20" rows="3" placeholder="Number of Hours" name="noOfHours" value="">
+    <br><br>
+    <label class="form-field-title" for="noOfMinutes" style="font-size:120%; color:purple;%">Number of Minutes:</label>
+    <input type="text" id="noOfMinutes" cols="20" rows="3" placeholder="Number of Minutes" name="noOfMinutes" value="">
+    <br><br>
+    <label class="form-field-title" for="noOfSeconds" style="font-size:120%; color:purple;%">Number of Seconds:</label>
+    <input type="text" id="noOfSeconds" cols="20" rows="3" placeholder="Number of Seconds" name="noOfSeconds" value="">
+     <br><br>
+    <input type="submit" value="Start Adding Questions" class="btn btn-success">
+</form>
+{% endblock %}

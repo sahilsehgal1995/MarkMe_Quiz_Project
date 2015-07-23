@@ -4,30 +4,37 @@
   <div class="container">
   <h4>Question entry</h4>
   <br>
-  <form method="POST" action="/questions/" autocomplete="on">
-    <p style="font-size:120%; color:purple;%">Question number</p>
-    <input type="text"  cols="40" rows="3" placeholder="Question Number" name="qno" value="{{request.form.qno}}">
-    <p>Question</p>
-    <input type="text" class="form-control" placeholder="Question" name="question" value="{{request.form.question}}">
-    <br>
-    <p>Option A</p>
-    <input type="text" class="form-control" placeholder="Option 1" name="option1" value="{{request.form.option1}}">
-    <br>
-    <p>Option B</p>
-    <input type="text" class="form-control" placeholder="Option 2" name="option2" value="{{request.form.option2}}">
-    <br>
-    <p>Option C</p>
-    <input type="text" class="form-control" placeholder="Option 3" name="option3" value="{{request.form.option3}}">
-    <br>
-    <p>Option D</p>
-    <input type="text" class="form-control" placeholder="Option 4" name="option4" value="{{request.form.option4}}">
-    <br>
-    <p>Correct Answer</p>
-    <input type="text" class="form-control" placeholder="Correct Answer" name="correct_answer" value="{{request.form.correct_answer}}">
-    <br>
-    <br>
-    <input class="btn btn-default" type="submit" value="Submit">
-
+  <form method="POST" action="/questions/" autocomplete="off" name="form">
+    <label class="form-field-title" for="test_name1">Test name: {{ testName }}</label><br>
+    
+    <label class="form-field-title" for="questionNumber" style="font-size:120%; color:purple;%">Question number:</label>
+    <input type="text" id="questionNumber" cols="20" rows="3" placeholder="Question Number" name="qno" value="">
+    <br><br>
+    
+    <label class="form-field-title" for="questionNumber" style="font-size:120%; color:purple;%">Question:</label>
+    <input type="text" id="questionNumber" cols="1000" rows="3" placeholder="Question" name="question" value="">
+    <br><br>
+    
+    <label class="form-field-title" for="questionNumber" style="font-size:120%; color:purple;%">Option A:</label>
+    <input type="text" id="questionNumber" cols="100" rows="3" placeholder="Option 1" name="option1" value="">
+    <br><br>
+    
+    <label class="form-field-title" for="questionNumber" style="font-size:120%; color:purple;%">Option B:</label>
+    <input type="text" id="questionNumber" cols="100" rows="3" placeholder="Option 2" name="option2" value="">
+    <br><br>
+    
+    <label class="form-field-title" for="questionNumber" style="font-size:120%; color:purple;%">Option C:</label>
+    <input type="text" id="questionNumber" cols="100" rows="3" placeholder="Option 3" name="option3" value="">
+    <br><br>
+    
+    <label class="form-field-title" for="questionNumber" style="font-size:120%; color:purple;%">Option D:</label>
+    <input type="text" id="questionNumber" cols="100" rows="3" placeholder="Option 4" name="option4" value="">
+    <br><br>
+    
+    <label class="form-field-title" for="questionNumber" style="font-size:120%; color:purple;%">Correct Answer:</label>
+    <input type="text" id="questionNumber" cols="100" rows="3" placeholder="Correct Answer" name="correct_answer" value="">
+    <br><br>
+    <input class="btn btn-info" type="submit" value="Submit Question">
      </form>
   {% if error %}
     <p class="error"><strong> Error:</strong>{{error}}</p>
