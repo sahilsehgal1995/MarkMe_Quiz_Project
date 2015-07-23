@@ -6,6 +6,7 @@ from passlib.hash import sha256_crypt
 from MySQLdb import escape_string as thwart
 from functools import wraps
 from test import test
+from os import path
 import gc, json
 
 app=Flask(__name__)
@@ -177,7 +178,12 @@ def ajax(question_id):
 def createTest():
   try:
     if request.method == 'POST':
-      return redirect('/questions/')
+      #flash(request.form['testName'])
+      f = open('templates/'+request.form['testName'] + '.html', 'w' )
+      content = render_template("test.html", databaseQuestions=request.form['databaseQuestions'], testQuestions=request.form['testQuestions'], hours=request.form['noOfHours'], minutes=request.form['noOfMinutes'], seconds=request.form['noOfSeconds'])
+      f.write(content)
+      f.close()
+      return render_template(request.form['testName'] + '.html')
     
     return render_template("createTest.html")
   

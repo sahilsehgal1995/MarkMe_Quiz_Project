@@ -24,6 +24,12 @@
     <label class="form-field-title" for="noOfSeconds" style="font-size:120%; color:purple;%" >Number of Seconds:</label>
     <input type="number" id="noOfSeconds" cols="20" rows="3" placeholder="Number of Seconds" name="noOfSeconds" value="" required max="59" min="0">
      <br><br>
+    <label class="form-field-title" for="testQuestions" style="font-size:120%; color:purple;%" >Number of Test Questions:</label>
+    <input type="number" id="testQuestions" cols="30" rows="3" placeholder="Number of Test Questions" name="testQuestions" required min="1">
+     <br><br>
+    <label class="form-field-title" for="databaseQuestions" style="font-size:120%; color:purple;%" >Number of Database Questions:</label>
+    <input type="number" id="databaseQuestions" cols="30" rows="3" placeholder="Number of Database Questions" name="databaseQuestions" value="" required min="1">
+     <br><br>
     <input type="submit" value="Start Adding Questions" class="btn btn-success">
 </form>
 {% endblock %}
