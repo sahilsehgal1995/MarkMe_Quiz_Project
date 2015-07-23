@@ -31,9 +31,6 @@ class questions(Form):
 def index():
   return render_template("main.html")
 
-@app.route('/dashboard/', methods=['GET', 'POST'])
-def dashboard():
-  return render_template("dashboard.html")
 
 
 def login_required(f):
@@ -45,6 +42,12 @@ def login_required(f):
       flash("You need to login first")
       return redirect(url_for("login"))
   return wrap
+
+
+@app.route('/dashboard/', methods=['GET', 'POST'])
+@login_required
+def dashboard():
+  return render_template("dashboard.html")
 
 @app.route('/logout/')
 @login_required
@@ -101,7 +104,7 @@ def question_set():
 def taketest():
   try:
     form = questions(request.form)
-    return render_template("test.html")
+    return render_template("test.html", databaseQuestions=11, testQuestions=10, hours=0, minutes=5, seconds=0)
   
   except Exception as e:
     return (str(e))

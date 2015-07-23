@@ -58,16 +58,6 @@ font-weight: bold;
 <div id="main" style="width: 100%; overflow:auto;">
 	<div id="nav" style="float:left; width:70%;">
 		<div class="btn-group-vertical" id="questionButtons" role="group" aria-label="..." style="visibility: hidden;">
-	 		 <button type="button" class="btn btn-default" id="button_1" onclick="questionChange('Question 1')">Question 1</button>
-	 		 <button type="button" class="btn btn-default" id="button_2" onclick="questionChange('Question 2')">Question 2</button>
-	 		 <button type="button" class="btn btn-default" id="button_3" onclick="questionChange('Question 3')">Question 3</button>
-			 <button type="button" class="btn btn-default" id="button_4" onclick="questionChange('Question 4')">Question 4</button>
-	  		 <button type="button" class="btn btn-default" id="button_5" onclick="questionChange('Question 5')">Question 5</button>
-	 		 <button type="button" class="btn btn-default" id="button_6" onclick="questionChange('Question 6')">Question 6</button>
-	  		 <button type="button" class="btn btn-default" id="button_7" onclick="questionChange('Question 7')">Question 7</button>
-	 		 <button type="button" class="btn btn-default" id="button_8" onclick="questionChange('Question 8')">Question 8</button>
-	   		 <button type="button" class="btn btn-default" id="button_9" onclick="questionChange('Question 9')">Question 9</button>
-	  		 <button type="button" class="btn btn-default" id="button_10" onclick="questionChange('Question 10')">Question 10</button>
 		</div>
 
 
@@ -101,6 +91,13 @@ font-weight: bold;
 		<div id="TimerDivision"><p id="Timer">Timer to be started</p></div>
 	</div>
 
+</div>
+<div id="settings" style="visibility: hidden;">
+<span id="databaseQuestions">{{ databaseQuestions }}</span>
+<span id="testQuestions">{{ testQuestions }}</span>
+<span id="hours">{{ hours }}</span>
+<span id="minutes">{{ minutes }}</span>
+<span id="seconds">{{ seconds }}</span>
 </div>
 <script src="{{ url_for('static', filename='js/test.js') }}">
 </script>

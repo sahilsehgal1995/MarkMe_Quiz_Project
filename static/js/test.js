@@ -6,13 +6,18 @@ var correctAnswer;
 var questionButtonList = {}, responses = {};
 var currentQuestion;
 var timer;
+var databaseQuestions = document.getElementById("databaseQuestions").innerHTML,
+    testQuestions = document.getElementById("testQuestions").innerHTML,
+    hours = document.getElementById("hours").innerHTML,
+    minutes = document.getElementById("minutes").innerHTML,
+    seconds = document.getElementById("seconds").innerHTML;
 
 function questionListGeneration()
  {
   var array = new Array;
-  for (var i=1; i<=10;)
+  for (var i=1; i<=testQuestions;)
   {
-    var rand = Math.floor((Math.random() * 10) + 1);
+    var rand = Math.floor((Math.random() * databaseQuestions) + 1);
     if((array.indexOf(rand)) == -1)
     {
       var x=rand.toString();
@@ -26,7 +31,23 @@ function questionListGeneration()
     }
    }  
    currentQuestion = "Question 1"
+   initialSetup();
    questionChange(currentQuestion);
+}
+
+function initialSetup()
+{
+  for(var i=1; i<=testQuestions; i++)
+  {
+    var button = document.createElement("button");
+    button.setAttribute("type", "button");
+    button.setAttribute("class", "btn btn-default");
+    button.setAttribute("onclick", "questionChange('Question " + i.toString() + "')");
+    button.setAttribute("id", "button_" + i.toString());
+    button.appendChild(document.createTextNode("Question " + i.toString()));
+  
+    document.getElementById("questionButtons").appendChild(button);
+  }
 }
 
 function optionUpdationOnForm()
@@ -67,6 +88,7 @@ function questionChange(questionId)
   {
     if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
+      
       var myArr = JSON.parse(xmlhttp.responseText);
       currentQuestion=questionId;
       document.getElementById("question").innerHTML = currentQuestion + ": " + myArr.question;
@@ -108,9 +130,9 @@ function scoreSubmission(score)
 
 function startButtonClicked()
 {
-	timeLeft.setHours(0);
-	timeLeft.setMinutes(0);
-	timeLeft.setSeconds(10);
+	timeLeft.setHours(hours);
+	timeLeft.setMinutes(minutes);
+	timeLeft.setSeconds(seconds);
 	document.getElementById("endButton").style.visibility='visible';
 	document.getElementById("ques").style.visibility='visible';
 	document.getElementById("questionButtons").style.visibility='visible';
