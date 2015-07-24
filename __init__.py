@@ -9,6 +9,7 @@ from test import test
 from os import path
 import gc, json
 import commands, os
+from createTestFiles import generateTestFiles
 
 app=Flask(__name__)
 app.config['SECRET_KEY'] = 'HARD TO GUESS'
@@ -180,13 +181,10 @@ def createTest():
   try:
     if request.method == 'POST':
       #flash(request.form['testName'])
-      if not os.path.exists(os.getcwd()+'/templates/'+session['username']):
-	os.makedirs(os.getcwd()+'/templates/'+session['username'])
-      f = open('templates/'+session['username']+'/'+request.form['testName'] + '.html', 'w' )
-      content = render_template("test.html", databaseQuestions=request.form['databaseQuestions'], testQuestions=request.form['testQuestions'], hours=request.form['noOfHours'], minutes=request.form['noOfMinutes'], seconds=request.form['noOfSeconds'])
-      f.write(content)
-      f.close()
-      return render_template(session['username']+'/'+request.form['testName'] + '.html')
+       response = generateTestFiles(session['username'], request.form['testName'], "test.html", request.form['databaseQuestions'], request.form['testQuestions'], request.form['noOfHours'], request.form['noOfMinutes'], request.form['noOfSeconds'])
+       flash(response)
+       return redirect(url_for('question_set'))
+    #render_template(session['username']+'/'+request.form['testName'] + '.html')
     
     return render_template("createTest.html")
     
