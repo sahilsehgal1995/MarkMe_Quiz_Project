@@ -71,7 +71,6 @@ function markAnswerClicked()
 		{
 			if (option[i].value == correctAnswer)
 			{
-			  alert("Correct Answer");
 			  responses[currentQuestion] = "Correct Answer";
 			}
 			optionsMarked[currentQuestion] = i+1;
