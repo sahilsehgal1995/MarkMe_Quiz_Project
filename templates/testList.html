@@ -1,0 +1,9 @@
+{% extends "header.html" %}
+{% block body %}
+<ul>
+{% for file in files %}
+  <li><a id="{{file}}" href="/test/{{file}}">{{file}}</a>
+  <br>
+{% endfor %}
+</ul>
+{% endblock %}

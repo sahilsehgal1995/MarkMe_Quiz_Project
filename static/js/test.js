@@ -87,7 +87,6 @@ function questionChange(questionId)
   {
     if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
-      
       var myArr = JSON.parse(xmlhttp.responseText);
       currentQuestion=questionId;
       document.getElementById("question").innerHTML = currentQuestion + ": " + myArr.question;
@@ -104,7 +103,7 @@ function questionChange(questionId)
       optionUpdationOnForm();
     }
   }
-  var url = "/test/" + questionNumbers[questionId].toString();
+  var url = "/ques/" + questionNumbers[questionId].toString();
   xmlhttp.open("GET", url, true);
   xmlhttp.send();
 }

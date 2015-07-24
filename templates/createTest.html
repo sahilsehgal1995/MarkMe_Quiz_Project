@@ -9,27 +9,34 @@
     <input type="text" id="testName" cols="20" rows="3" placeholder="Name of the Test" name="testName" value="" required>      
     <br><br>
 
-     <label class="form-field-title" for="startDate" style="font-size:120%; color:purple;%">Start Date:</label>
+    <label class="form-field-title" for="startDate" style="font-size:120%; color:purple;%">Date of Test:</label>
     <input type="date" id="startDate" cols="20" rows="3" placeholder="Enter the date on which test to be started" required name="startDate" value="">
     <br><br>
-     <label class="form-field-title" for="startTime" style="font-size:120%; color:purple;%">Start Time:</label>
-    <input type="time" id="startTime" cols="20" rows="3" placeholder="" name="startDate" value="" required>
+    
+    <label class="form-field-title" for="startTime" style="font-size:120%; color:purple;%">Start Time:</label>
+    <input type="time" id="startTime" cols="20" rows="3" placeholder="Time at which test to be started" required name="startTime" value="">
     <br><br>
+    
     <label class="form-field-title" for="noOfHours" style="font-size:120%; color:purple;%" >Number of hours:</label>
     <input type="number" id="noOfHours" cols="20" rows="3" placeholder="hours" name="noOfHours" value="" required max="23" min="0">
     <br><br>
+    
     <label class="form-field-title" for="noOfMinutes" style="font-size:120%; color:purple;%">Number of Minutes:</label>
     <input type="number" id="noOfMinutes" cols="20" rows="3" placeholder="Minutes" name="noOfMinutes" value="" required max="59" min="0">
     <br><br>
+    
     <label class="form-field-title" for="noOfSeconds" style="font-size:120%; color:purple;%" >Number of Seconds:</label>
     <input type="number" id="noOfSeconds" cols="20" rows="3" placeholder="Number of Seconds" name="noOfSeconds" value="" required max="59" min="0">
      <br><br>
+    
     <label class="form-field-title" for="testQuestions" style="font-size:120%; color:purple;%" >Number of Test Questions:</label>
     <input type="number" id="testQuestions" cols="30" rows="3" placeholder="Number of Test Questions" name="testQuestions" required min="1">
      <br><br>
+    
     <label class="form-field-title" for="databaseQuestions" style="font-size:120%; color:purple;%" >Number of Database Questions:</label>
     <input type="number" id="databaseQuestions" cols="30" rows="3" placeholder="Number of Database Questions" name="databaseQuestions" value="" required min="1">
      <br><br>
+    
     <input type="submit" value="Start Adding Questions" class="btn btn-success">
 </form>
 {% endblock %}

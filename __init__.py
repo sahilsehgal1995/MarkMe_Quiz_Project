@@ -2,6 +2,8 @@ from flask import Flask, render_template, url_for, flash, session, redirect, req
 from dbConnect import connection,questionEntry, userRegistrationInDatabase
 from wtforms import Form, TextField, PasswordField, BooleanField, StringField
 from wtforms.validators import Required, Length, EqualTo
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from datetime import datetime
 from passlib.hash import sha256_crypt
 from MySQLdb import escape_string as thwart
 from functools import wraps
@@ -9,7 +11,8 @@ from test import test
 from os import path
 import gc, json
 import commands, os
-from createTestFiles import generateTestFiles
+from createTestFiles import generateTestFiles, testList
+
 
 app=Flask(__name__)
 app.config['SECRET_KEY'] = 'HARD TO GUESS'
@@ -102,12 +105,12 @@ def question_set():
     return (str(e))
 
 
-@app.route('/test/', methods=['GET','POST'])
+@app.route('/test/<testname>', methods=['GET','POST'])
 @login_required
-def taketest():
+def taketest(testname):
   try:
     form = questions(request.form)
-    return render_template("test.html", databaseQuestions=11, testQuestions=10, hours=0, minutes=5, seconds=0)
+    return render_template("users/"+ session['username']+ "/"+testname +".html")
   
   except Exception as e:
     return (str(e))
@@ -159,7 +162,7 @@ def register():
   except Exception as e:
     return (str(e))
 
-@app.route('/test/<question_id>', methods=['GET', 'POST'])
+@app.route('/ques/<question_id>', methods=['GET', 'POST'])
 def ajax(question_id):
   try:
     x = test(question_id)
@@ -177,20 +180,32 @@ def ajax(question_id):
     return str(e)
   
 @app.route('/createtest/', methods=['GET','POST'])
+@login_required
 def createTest():
   try:
     if request.method == 'POST':
-      #flash(request.form['testName'])
-       response = generateTestFiles(session['username'], request.form['testName'], "test.html", request.form['databaseQuestions'], request.form['testQuestions'], request.form['noOfHours'], request.form['noOfMinutes'], request.form['noOfSeconds'])
+       response = generateTestFiles(session['username'], request.form['testName'], "test.html", request.form['databaseQuestions'], request.form['testQuestions'], request.form['noOfHours'], request.form['noOfMinutes'], request.form['noOfSeconds'], request.form['startDate'], request.form['startTime'])
        flash(response)
        return redirect(url_for('question_set'))
-    #render_template(session['username']+'/'+request.form['testName'] + '.html')
     
     return render_template("createTest.html")
     
   except Exception as e:
     return str(e)
 
+@app.route('/testlist/', methods=['GET','POST'])
+@login_required
+def test_list():
+  try:
+    response=testList(session['username'])
+    if response is False:
+      flash("You have not created any test")
+      return redirect(url_for('createTest'))
+    
+    return render_template("testList.html", files=response)
+    
+  except Exception as e:
+    return str(e)
 
 if __name__=='__main__':
   app.run()
