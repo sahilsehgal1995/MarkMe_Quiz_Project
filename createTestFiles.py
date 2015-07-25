@@ -79,7 +79,7 @@ def endTimeVerification(testname):
   minutes=int(minutes[:-1])
   seconds=lines[-3]
   seconds=int(seconds[:-1])
-  return date + datetime.timedelta(0,hours*3600 + (minutes+1)*60 + seconds)
+  return date + datetime.timedelta(0,hours*3600 + (minutes+3)*60 + seconds)
   
 if __name__=='__main__':
   endTimeVerification()

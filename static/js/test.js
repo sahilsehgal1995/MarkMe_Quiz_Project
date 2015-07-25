@@ -79,6 +79,12 @@ function markAnswerClicked()
 		}
 	}
 }
+function unMarkAnswer()
+{
+  optionsMarked[currentQuestion] = "unMarked";
+  optionUpdationOnForm();
+  document.getElementById(questionButtonList[currentQuestion]).className = "btn btn-default";
+}
 
 function questionChange(questionId)
 {
@@ -139,6 +145,21 @@ function startButtonClicked()
 function endTest()
 {
 	var score=0;
+	if ((timeLeft.getHours()*3600 + timeLeft.getMinutes()*60 + timeLeft.getSeconds())>0)
+	{
+	  var count=0;
+	  for (var key in optionsMarked)
+	  {
+	    if(optionsMarked[key] == "unMarked")
+	      ++count;
+	  }
+	  if (count)
+	  {
+	    var reply = confirm( count.toString() +" Questions are unmarked. Are you sure you want to finish the test?")
+	    if( reply != true )
+	    return
+	  }
+	}
 	for (var key in responses)
 	{
 	  if(responses[key] == "Correct Answer")
@@ -176,7 +197,6 @@ function timeUpdation()
 		{
 			var myvar = document.getElementById("Timer");
 			myvar.innerHTML = ""+myvar.innerHTML + "";
-// 			$("#Timer").animate({ opacity: 'toggle'}).css("color", "red");
 			$("#Timer").toggleClass("TimerClass");
 		}
 
