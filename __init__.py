@@ -10,7 +10,7 @@ from test import test
 from os import path
 import gc, json
 import commands, os
-from createTestFiles import generateTestFiles, testList, startTimeVerification
+from createTestFiles import generateTestFiles, testList, TimeVerification
 
 
 app=Flask(__name__)
@@ -109,11 +109,11 @@ def question_set():
 def taketest(testname):
   try:
     form = questions(request.form)
-    reply = startTimeVerification(testname)
+    reply = TimeVerification(testname)
     if reply:
       return render_template("tests/"+testname +".html")
     
-    flash("Test Has not been started yet")
+    flash("Test is not available now")
     return render_template('dashboard.html')
     
   

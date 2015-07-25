@@ -116,11 +116,9 @@ function scoreSubmission(score)
   {
     if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
-     // alert(xmlhttp.responseText);
       window.location.href="/scoresubmission/";
     }
   }
-  //var my = document.getElementById("user").innerHTML;
   var url = "/scoresubmission/?username="+ document.getElementById("user").innerHTML + "&score="+ score.toString();
   xmlhttp.open("POST",url, true);
   xmlhttp.send();

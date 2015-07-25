@@ -1,12 +1,14 @@
 from flask import render_template
 import os
 from os import walk
+import datetime
+
 
 def generateTestFiles(username, testName, testFile, databaseQuestions, testQuestions, Hours, Minutes, nSeconds, date, time):
   if not os.path.exists(os.getcwd()+'/templates/tests/'):
       os.makedirs(os.getcwd()+'/templates/tests/')
   f = open(os.getcwd()+'/templates/tests/' + testName + '.html', 'w' )
-  content = render_template(testFile, databaseQuestions=databaseQuestions, testQuestions=testQuestions, hours=Hours, minutes=Minutes, seconds=nSeconds, startDate=date ,startTime=time)
+  content = render_template(testFile,testName=testName , databaseQuestions=databaseQuestions, testQuestions=testQuestions, hours=Hours, minutes=Minutes, seconds=nSeconds, startDate=date ,startTime=time)
   f.write(content)
   f.close()
   
@@ -39,10 +41,9 @@ def testList(username):
 	fileList.append(f[0:-5])
     return fileList
      
-from datetime import datetime
 
   
-def startTimeVerification(testname):
+def TimeVerification(testname):
   f = open(os.getcwd()+'/templates/tests/'+testname+'.txt', 'r' )
   lines = f.readlines()
   date = lines[-2]
@@ -52,12 +53,33 @@ def startTimeVerification(testname):
   date=date.replace("-", " ")
   time =time.replace(":", " ")
   dt = date + " "+time
-  date = datetime.strptime(dt, '%Y %m %d %H %M')
-  if datetime.now()< date:
+  startTime = datetime.datetime.strptime(dt, '%Y %m %d %H %M')
+  endTime = endTimeVerification(testname)
+  if datetime.datetime.now() < startTime or datetime.datetime.now() > endTime:
     return False
   else:
     return True
 
+
+def endTimeVerification(testname):
+  f = open(os.getcwd()+'/templates/tests/'+testname+'.txt', 'r' )
+  lines = f.readlines()
+  date = lines[-2]
+  date = date[:-1]
+  time = lines[-1]
+  time = time[:-1]
+  date=date.replace("-", " ")
+  time =time.replace(":", " ")
+  dt = date + " "+time
+  date = datetime.datetime.strptime(dt, '%Y %m %d %H %M')
+  
+  hours=lines[-5]
+  hours = int(hours[:-1])
+  minutes=lines[-4]
+  minutes=int(minutes[:-1])
+  seconds=lines[-3]
+  seconds=int(seconds[:-1])
+  return date + datetime.timedelta(0,hours*3600 + (minutes+1)*60 + seconds)
   
 if __name__=='__main__':
-  token()
+  endTimeVerification()
