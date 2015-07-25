@@ -8,9 +8,9 @@ def connection():
   c = conn.cursor()
   return c, conn
 
-def questionEntry(qno, question, option1, option2, option3, option4, correct_answer):
+def questionEntry(tablename, qno, question, option1, option2, option3, option4, correct_answer):
   c,conn = connection()
-  c.execute("INSERT INTO questions (qno, question, option1, option2, option3, option4, correct_answer) values('%s','%s','%s','%s','%s','%s','%s')" %(thwart(qno), thwart(question), thwart(option1), thwart(option2), thwart(option3), thwart(option4), thwart(correct_answer)))
+  c.execute("INSERT INTO %s (qno, question, option1, option2, option3, option4, correct_answer) values('%s','%s','%s','%s','%s','%s','%s')" %(tablename,thwart(qno), thwart(question), thwart(option1), thwart(option2), thwart(option3), thwart(option4), thwart(correct_answer)))
   conn.commit()
   c.close()
   conn.close()

@@ -86,19 +86,19 @@ def login():
   except Exception as e:
     return (str(e))
 
-@app.route('/questions/', methods=['GET', 'POST'])
+#@app.route('/questions/')
+@app.route('/questions/<databasename>', methods=['GET', 'POST'])
 @login_required
-def question_set():
+def question_set(databasename):
   try:
     form = questions(request.form)
     c,conn = connection()
     if request.method=='POST' and form.validate():
-      databaseReply = questionEntry(form.qno.data, form.question.data, form.option1.data, form.option2.data, form.option3.data, form.option4.data, form.correct_answer.data)
+      databaseReply = questionEntry('questions', form.qno.data, form.question.data, form.option1.data, form.option2.data, form.option3.data, form.option4.data, form.correct_answer.data)
       flash(databaseReply)
-      return redirect(url_for('question_set'))
+      return redirect('questions/users')
     else:
-      flash("Enter question")
-      return render_template('question.html')
+      return render_template('question.html', testname=databasename)
     
   except Exception as e:
     return (str(e))
@@ -191,7 +191,7 @@ def createTest():
     if request.method == 'POST':
        response = generateTestFiles(session['username'], request.form['testName'], "test.html", request.form['databaseQuestions'], request.form['testQuestions'], request.form['noOfHours'], request.form['noOfMinutes'], request.form['noOfSeconds'], request.form['startDate'], request.form['startTime'])
        flash(response)
-       return redirect(url_for('question_set'))
+       return redirect('/questions/'+request.form['testName'])
     
     return render_template("createTest.html")
     
