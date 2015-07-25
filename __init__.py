@@ -2,7 +2,6 @@ from flask import Flask, render_template, url_for, flash, session, redirect, req
 from dbConnect import connection,questionEntry, userRegistrationInDatabase
 from wtforms import Form, TextField, PasswordField, BooleanField, StringField
 from wtforms.validators import Required, Length, EqualTo
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from datetime import datetime
 from passlib.hash import sha256_crypt
 from MySQLdb import escape_string as thwart
@@ -11,7 +10,7 @@ from test import test
 from os import path
 import gc, json
 import commands, os
-from createTestFiles import generateTestFiles, testList
+from createTestFiles import generateTestFiles, testList, startTimeVerification
 
 
 app=Flask(__name__)
@@ -110,7 +109,13 @@ def question_set():
 def taketest(testname):
   try:
     form = questions(request.form)
-    return render_template("users/"+ session['username']+ "/"+testname +".html")
+    reply = startTimeVerification(testname)
+    if reply:
+      return render_template("tests/"+testname +".html")
+    
+    flash("Test Has not been started yet")
+    return render_template('dashboard.html')
+    
   
   except Exception as e:
     return (str(e))
