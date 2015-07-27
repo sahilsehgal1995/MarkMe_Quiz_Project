@@ -2,7 +2,7 @@ from flask import render_template
 import os
 from os import walk
 import datetime
-
+from dbConnect import databaseCreation
 
 def generateTestFiles(username, testName, testFile, databaseQuestions, testQuestions, Hours, Minutes, nSeconds, date, time):
   if not os.path.exists(os.getcwd()+'/templates/tests/'):
@@ -11,6 +11,8 @@ def generateTestFiles(username, testName, testFile, databaseQuestions, testQuest
   content = render_template(testFile,testName=testName , databaseQuestions=databaseQuestions, testQuestions=testQuestions, hours=Hours, minutes=Minutes, seconds=nSeconds, startDate=date ,startTime=time)
   f.write(content)
   f.close()
+  
+  databaseCreation(testname)
   
   f = open(os.getcwd()+'/templates/tests/' + testName + '.txt', 'w' )
   f.write(username+'\n')

@@ -27,3 +27,29 @@ def userRegistrationInDatabase(username, password, email, name):
   return "User Registration Successfully completed!!!!"
 
 
+def databaseCreation(databaseName):
+  conn =MySQLdb.connect(host='localhost', user='root', passwd='123456', db='users')
+  c = conn.cursor()
+  c.execute("create database %s" %databaseName)
+  conn.commit()
+  c.execute("use %s ;" %databaseName)
+  conn.commit()
+  c.execute("create table users (rno varchar(100), password text, name text, email text, primary key (rno) );")
+  conn.commit()
+  c.execute("create table questions (qno varchar(760), question text, option1 text, option2 text, option3 text, option4 text, correct_answer text, primary key (qno));")
+  conn.commit()
+  c.close()
+  gc.collect()
+  return 
+
+def databaseDeletion(databaseName):
+  conn =MySQLdb.connect(host='localhost', user='root', passwd='123456', db='users')
+  c = conn.cursor()
+  c.execute("drop database %s" %databaseName)
+  conn.commit()
+  c.close()
+  gc.collect()
+  return 
+
+if __name__ == '__main__':
+  databaseDeletion("Sample")
