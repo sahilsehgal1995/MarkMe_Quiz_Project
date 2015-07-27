@@ -4,8 +4,8 @@
   <div class="container">
   <h2>Enter questions in {{testname}} test</h2>
   <br>
-  <form method="POST" action="/questions/users" autocomplete="off" name="form">
-    <label class="form-field-title" for="test_name1">Test name: {{ testName }}</label><br>
+  <form method="POST" action="/questions/{{ testname }}" autocomplete="off" name="form">
+    <label class="form-field-title" for="test_name1">Test name: {{ testname }}</label><br>
     
     <label class="form-field-title" for="questionNumber" style="font-size:120%; color:purple;%">Question number:</label>
     <input type="text" id="questionNumber" cols="20" rows="3" placeholder="Question Number" name="qno" value="">

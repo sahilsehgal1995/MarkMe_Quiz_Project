@@ -2,10 +2,10 @@
 {% block body %}
 <body>
   <div class="container">
-  <h4>Register</h4>
+  <h4>Registeration for test {{ testname }}</h4>
   <br>
   {% from "formhelper.html" import render_field %}
-  <form method=post action="/register/">
+  <form method=post action="/register/{{testname}}">
     <dl>
     {{render_field(form.username)}}
     {{render_field(form.name)}}

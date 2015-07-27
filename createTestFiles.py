@@ -2,9 +2,9 @@ from flask import render_template
 import os
 from os import walk
 import datetime
-from dbConnect import databaseCreation
+from dbConnect import databaseCreation, databaseDeletion
 
-def generateTestFiles(username, testName, testFile, databaseQuestions, testQuestions, Hours, Minutes, nSeconds, date, time):
+def generateTestFiles(testName, testFile, databaseQuestions, testQuestions, Hours, Minutes, nSeconds, date, time):
   if not os.path.exists(os.getcwd()+'/templates/tests/'):
       os.makedirs(os.getcwd()+'/templates/tests/')
   f = open(os.getcwd()+'/templates/tests/' + testName + '.html', 'w' )
@@ -12,10 +12,9 @@ def generateTestFiles(username, testName, testFile, databaseQuestions, testQuest
   f.write(content)
   f.close()
   
-  databaseCreation(testname)
+  databaseCreation(testName)
   
   f = open(os.getcwd()+'/templates/tests/' + testName + '.txt', 'w' )
-  f.write(username+'\n')
   f.write(testName+'\n')
   f.write(testFile+'\n')
   f.write(databaseQuestions+'\n')
@@ -28,7 +27,7 @@ def generateTestFiles(username, testName, testFile, databaseQuestions, testQuest
   f.close()
   return "Test Created successfully"
 
-def testList(username):
+def testList():
   if not os.path.exists(os.getcwd()+'/templates/tests/'):
     return False
   else:
@@ -36,12 +35,20 @@ def testList(username):
     for (dirpath, dirnames, filenames) in walk(os.getcwd()+'/templates/tests/'):
       files.extend(filenames)
       break
+    if not files:
+      return False
     fileList = []
     for f in files:
       string =f[-5:]
       if(string =='.html'):
 	fileList.append(f[0:-5])
-    return fileList
+    dic = {}
+    for f in fileList:
+      fileObject = open(os.getcwd() + '/templates/tests/'+f+'.txt', 'r')
+      lines= fileObject.readlines()
+      date=lines[-2]
+      dic[f] = date[:-1]
+    return dic
      
 
   
@@ -82,6 +89,19 @@ def endTimeVerification(testname):
   seconds=lines[-3]
   seconds=int(seconds[:-1])
   return date + datetime.timedelta(0,hours*3600 + (minutes+3)*60 + seconds)
+
+
+def deleteFiles(testName):
+  os.remove(os.getcwd()+'/templates/tests/'+testName+'.html')
+  os.remove(os.getcwd()+'/templates/tests/'+testName+'.txt')
+  reply = databaseDeletion(testName)
+  return reply
   
+def sample():
+  s= "Computer archi sample"
+  print s
+  s=s.replace(" ", "")
+  print s
+
 if __name__=='__main__':
-  endTimeVerification()
+  sample()

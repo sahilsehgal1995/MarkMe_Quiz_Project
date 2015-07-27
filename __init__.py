@@ -10,7 +10,7 @@ from test import test
 from os import path
 import gc, json
 import commands, os
-from createTestFiles import generateTestFiles, testList, TimeVerification
+from createTestFiles import generateTestFiles, testList, TimeVerification, deleteFiles
 
 
 app=Flask(__name__)
@@ -50,7 +50,6 @@ def login_required(f):
 
 
 @app.route('/dashboard/', methods=['GET', 'POST'])
-@login_required
 def dashboard():
   return render_template("dashboard.html")
 
@@ -69,13 +68,14 @@ def login():
     form2 = UserRegisteration(request.form)
     c,conn = connection()
     if request.method =='POST':
-      data = c.execute("select * from users where username= '%s'" %(thwart(request.form['username'])))
-      data = c.fetchone()[1]
-      if sha256_crypt.verify(request.form['password'],data):
-	session['logged_in'] = True
-	session['username'] = request.form['username']
-	flash('You are now logged in!')
-	return redirect(url_for('dashboard'))
+      if c.execute("select * from users where username= '%s'" %(thwart(request.form['username']))):
+	data = c.execute("select * from users where username= '%s'" %(thwart(request.form['username'])))
+	data = c.fetchone()[1]
+	if sha256_crypt.verify(request.form['password'],data):
+	  session['logged_in'] = True
+	  session['username'] = request.form['username']
+	  flash('You are now logged in!')
+	  return redirect(url_for('dashboard'))
       else:
 	flash('Authentication failed')
     
@@ -86,7 +86,6 @@ def login():
   except Exception as e:
     return (str(e))
 
-#@app.route('/questions/')
 @app.route('/questions/<databasename>', methods=['GET', 'POST'])
 @login_required
 def question_set(databasename):
@@ -94,9 +93,9 @@ def question_set(databasename):
     form = questions(request.form)
     c,conn = connection()
     if request.method=='POST' and form.validate():
-      databaseReply = questionEntry('questions', form.qno.data, form.question.data, form.option1.data, form.option2.data, form.option3.data, form.option4.data, form.correct_answer.data)
+      databaseReply = questionEntry(databasename, form.qno.data, form.question.data, form.option1.data, form.option2.data, form.option3.data, form.option4.data, form.correct_answer.data)
       flash(databaseReply)
-      return redirect('questions/users')
+      return redirect('questions/'+databasename)
     else:
       return render_template('question.html', testname=databasename)
     
@@ -142,32 +141,34 @@ def page_not_found(e):
   except Exception as e:
     return render_template("404.html", error=e)
   
-@app.route('/register/', methods=['GET', 'POST'])
-def register():
+@app.route('/register/<testname>', methods=['GET', 'POST'])
+def register(testname):
   try:
     flash ("Welcome to User Registration Page!!")
     form = UserRegisteration(request.form)
     if request.method == 'POST' and form.validate():
       username = form.username.data
-      
       c, conn = connection()
+      testname = testname.replace(" ","")
+      c.execute("use %s ;" %testname)
+      conn.commit()
       x = c.execute("select * from users where username = '%s'" %(thwart(username)))
-      
       if int(x) > 0:
 	flash("Oops!! That username already exists, Try something else")
 	return render_template("register.html", form = form)
       else:
-	databaseReply = userRegistrationInDatabase(username, form.password.data,form.email.data, form.name.data,)
+	databaseReply = userRegistrationInDatabase(testname, username, form.password.data,form.email.data, form.name.data,)
 	flash(databaseReply)
 	session['logged_in'] = True
 	session['username'] = username
 	return redirect(url_for('dashboard'))
     else:
-      return render_template("register.html", form=form)
+      return render_template("register.html", form=form, testname=testname)
   except Exception as e:
     return (str(e))
 
 @app.route('/ques/<question_id>', methods=['GET', 'POST'])
+@login_required
 def ajax(question_id):
   try:
     x = test(question_id)
@@ -185,11 +186,10 @@ def ajax(question_id):
     return str(e)
   
 @app.route('/createtest/', methods=['GET','POST'])
-@login_required
 def createTest():
   try:
     if request.method == 'POST':
-       response = generateTestFiles(session['username'], request.form['testName'], "test.html", request.form['databaseQuestions'], request.form['testQuestions'], request.form['noOfHours'], request.form['noOfMinutes'], request.form['noOfSeconds'], request.form['startDate'], request.form['startTime'])
+       response = generateTestFiles(request.form['testName'], "test.html", request.form['databaseQuestions'], request.form['testQuestions'], request.form['noOfHours'], request.form['noOfMinutes'], request.form['noOfSeconds'], request.form['startDate'], request.form['startTime'])
        flash(response)
        return redirect('/questions/'+request.form['testName'])
     
@@ -199,15 +199,28 @@ def createTest():
     return str(e)
 
 @app.route('/testlist/', methods=['GET','POST'])
-@login_required
 def test_list():
   try:
-    response=testList(session['username'])
+    response=testList()
     if response is False:
       flash("You have not created any test")
       return redirect(url_for('createTest'))
     
-    return render_template("testList.html", files=response)
+    return render_template("testList.html", dic=response)
+    
+  except Exception as e:
+    return str(e)
+
+@app.route('/deletetest/<testname>', methods=['GET', 'POST'])
+@login_required
+def delete_test(testname):
+  try:
+    reply = deleteFiles(testname)
+    if reply:
+      flash("Test Deleted Successfully")
+    else:
+      flash("Unable to delete test")
+    return redirect(url_for('test_list'))
     
   except Exception as e:
     return str(e)
