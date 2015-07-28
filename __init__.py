@@ -1,12 +1,11 @@
 from flask import Flask, render_template, url_for, flash, session, redirect, request, jsonify
-from dbConnect import connection,questionEntry, userRegistrationInDatabase
+from dbConnect import connection,questionEntry, userRegistrationInDatabase, submitScore, questionData
 from wtforms import Form, TextField, PasswordField, BooleanField, StringField
 from wtforms.validators import Required, Length, EqualTo
 from datetime import datetime
 from passlib.hash import sha256_crypt
 from MySQLdb import escape_string as thwart
 from functools import wraps
-from test import test
 from os import path
 import gc, json
 import commands, os
@@ -107,9 +106,9 @@ def question_set(databasename):
 @login_required
 def taketest(testname):
   try:
-    form = questions(request.form)
     reply = TimeVerification(testname)
     if reply:
+      session['testname']=testname
       return render_template("tests/"+testname +".html")
     
     flash("Test is not available now")
@@ -123,11 +122,21 @@ def taketest(testname):
 @login_required
 def scoreSubmission():
   try:
-    if request.method == 'POST':
-      session['score'] = request.args.get('score')
-      session['username'] = request.args.get('username')
-      return score + " "+ username
     
+    if request.method == 'POST':
+      testname = request.args.get('testname')
+      reply = TimeVerification(testname)
+      if reply:
+	session['score'] = request.args.get('score')
+	session['username'] = request.args.get('username')
+	response = submitScore(testname, request.args.get('username'), request.args.get('score'))
+	if response:
+	  return "Score Submitted Successfully"
+	else:
+	  return "UnAble To submit your Score"
+      else:
+	return "Test is not available now"
+
     if request.method == 'GET':
       return render_template("testCompletion.html")
   
@@ -167,20 +176,21 @@ def register(testname):
   except Exception as e:
     return (str(e))
 
-@app.route('/ques/<question_id>', methods=['GET', 'POST'])
+@app.route('/ques/', methods=['GET', 'POST'])
 @login_required
-def ajax(question_id):
+def ajax():
   try:
-    x = test(question_id)
-    Question = {
-    'question': x[1],
-    'option1': x[2],
-    'option2': x[3],
-    'option3': x[4],
-    'option4': x[5],
-    'correct_answer': x[6],
-    }
-    return jsonify(Question)
+    if request.method == 'POST':
+      x = questionData(request.args.get('testid'), request.args.get('testname'))
+      Question = {
+      'question': x[1],
+      'option1': x[2],
+      'option2': x[3],
+      'option3': x[4],
+      'option4': x[5],
+      'correct_answer': x[6],
+      }
+      return jsonify(Question)
   
   except Exception as e:
     return str(e)

@@ -109,8 +109,9 @@ function questionChange(questionId)
       optionUpdationOnForm();
     }
   }
-  var url = "/ques/" + questionNumbers[questionId].toString();
-  xmlhttp.open("GET", url, true);
+  var testName = document.getElementById("testName").innerHTML;
+  var url = "/ques/?testid=" + questionNumbers[questionId].toString() +"&testname="+testName;
+  xmlhttp.open("POST", url, true);
   xmlhttp.send();
 }
 
@@ -122,10 +123,12 @@ function scoreSubmission(score)
   {
     if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
-      window.location.href="/scoresubmission/";
+      alert(xmlhttp.responseText);
+      window.location.href="/scoresubmission/?testname="+document.getElementById("testName").innerHTML;
     }
   }
-  var url = "/scoresubmission/?username="+ document.getElementById("user").innerHTML + "&score="+ score.toString();
+  var testName = "&testname="+document.getElementById("testName").innerHTML;
+  var url = "/scoresubmission/?username="+ document.getElementById("user").innerHTML + "&score="+ score.toString() +testName;
   xmlhttp.open("POST",url, true);
   xmlhttp.send();
 }
@@ -155,9 +158,9 @@ function endTest()
 	  }
 	  if (count)
 	  {
-	    var reply = confirm( count.toString() +" Questions are unmarked. Are you sure you want to finish the test?")
+	    var reply = confirm( count.toString() +" Questions are unmarked. Are you sure you want to finish the test?");
 	    if( reply != true )
-	    return
+	    {questionChange(currentQuestion);}
 	  }
 	}
 	for (var key in responses)
