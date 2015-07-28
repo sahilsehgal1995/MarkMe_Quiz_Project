@@ -1,15 +1,19 @@
 {% extends "header.html" %}
 {% block body %}
 <h2>List of Tests</h2>
-<table border="0" cellpadding="10px"><br>
+<table border="0" cellpadding="50" cellspacing="5"><br>
 <tr>
   <th>Name of Test</th>
   <th>Date of Test</th>
+  <th>Start Time</th>
+  <th>Test Duration</th>
 </tr>
 {% for file, date in dic.iteritems() %}
   <tr>
   <td><a id="{{file}}" href="/test/{{file}}">{{file}}</a></td>
-  <td> {{ date }} </td>
+  {% for d in date %}
+  <td> {{ d }} </td>
+  {% endfor %}
   <td><a href="/questions/{{ file }}"><input class="btn btn-info" type="button" value="Add Questions"></a></td>
   <td><a href="/deletetest/{{ file }}"><input class="btn btn-Danger" type="button" value="Delete Test"></a></td>
   <td><a href="/register/{{ file }}"><input class="btn btn-warning" type="button" value="Register Test"></a></td>

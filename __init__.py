@@ -75,6 +75,8 @@ def login():
 	  session['username'] = request.form['username']
 	  flash('You are now logged in!')
 	  return redirect(url_for('dashboard'))
+	else:
+	  flash('Authentication failed')
       else:
 	flash('Authentication failed')
     

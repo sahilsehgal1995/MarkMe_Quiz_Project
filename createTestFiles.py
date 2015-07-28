@@ -47,7 +47,23 @@ def testList():
       fileObject = open(os.getcwd() + '/templates/tests/'+f+'.txt', 'r')
       lines= fileObject.readlines()
       date=lines[-2]
-      dic[f] = date[:-1]
+      date = date[:-1]
+      time = lines[-1]
+      starttime = time[:-1]
+      hours=lines[-5]
+      hours = hours[:-1]
+      minutes = lines[-4]
+      minutes = minutes[:-1]
+      seconds = lines[-3]
+      seconds = seconds[:-1]
+      testduration = ""
+      if int(hours)>0:
+	testduration = hours + " hours "
+      if int(minutes)>0:
+	testduration = testduration + minutes + " minutes "
+      if int(seconds)>0:
+	testduration = testduration + seconds + " seconds "
+      dic[f] = [date,starttime, testduration]
     return dic
      
 
@@ -97,11 +113,5 @@ def deleteFiles(testName):
   reply = databaseDeletion(testName)
   return reply
   
-def sample():
-  s= "Computer archi sample"
-  print s
-  s=s.replace(" ", "")
-  print s
-
 if __name__=='__main__':
-  sample()
+  testList()
