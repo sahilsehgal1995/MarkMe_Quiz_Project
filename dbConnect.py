@@ -8,6 +8,25 @@ def connection():
   c = conn.cursor()
   return c, conn
 
+def userLogin(databaseName, username, password):
+  try:
+    c,conn = connection()
+    databaseName = databaseName.replace(" ","")
+    c.execute("use %s ;" %databaseName)
+    conn.commit()
+    if c.execute("select * from users where username= '%s'" %(thwart(username))):
+	  data = c.execute("select * from users where username= '%s'" %(thwart(username)))
+	  data = c.fetchone()[1]
+	  if sha256_crypt.verify(password,data):
+	    return True
+	  else:
+	    return False
+    else:
+      return False
+  except Exception as e:
+    return str(e)
+    
+
 def questionEntry(databaseName, qno, question, option1, option2, option3, option4, correct_answer):
   try:
     c,conn = connection()

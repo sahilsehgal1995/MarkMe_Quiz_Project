@@ -14,9 +14,12 @@
   {% for d in date %}
   <td> {{ d }} </td>
   {% endfor %}
+  {% if session.admin  %}
   <td><a href="/questions/{{ file }}"><input class="btn btn-info" type="button" value="Add Questions"></a></td>
   <td><a href="/deletetest/{{ file }}"><input class="btn btn-Danger" type="button" value="Delete Test"></a></td>
+  {% endif %}
   <td><a href="/register/{{ file }}"><input class="btn btn-warning" type="button" value="Register Test"></a></td>
+  <td><a href="/login/?testname={{ file }}"><input class="btn btn-success" type="button" value="Login for Test"></a></td>
   </tr>
 {% endfor %}
 </table>

@@ -160,7 +160,7 @@ function endTest()
 	  {
 	    var reply = confirm( count.toString() +" Questions are unmarked. Are you sure you want to finish the test?");
 	    if( reply != true )
-	    {questionChange(currentQuestion);}
+	    {return}
 	  }
 	}
 	for (var key in responses)

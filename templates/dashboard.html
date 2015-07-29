@@ -16,7 +16,9 @@
     <div role="tabpanel" class="tab-pane fade " id="basics"><p><a href="/questions/users">Question entry</a></p></div>
     <div role="tabpanel" class="tab-pane fade in active" id="test">
 	<ul>
+	    {% if session.admin %}
 	    <li><a href="/createtest/">Create Test</a>
+	    {% endif %}
 	    <li><a href="/testlist/">View Available Test</a>
 	</ul>
     </div>

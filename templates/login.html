@@ -2,11 +2,34 @@
 
 {% block body %}
 <div class="container">
-<form action="" class="form-inline" method="post">
-  <input type="text" class="form-control" placeholder="Username" name="username" value="{{request.form.username}}">
-  <input type="password" class="form-control" placeholder="Password" name="password" value="{{request.form.password}}">
-  <input class="btn btn-default" type="submit" value="Login">
+<form action="" class="form-inline" method="post" id="login">
+  <label class="form-field-title" for="username" style="font-size:120%; color:purple;%">Username:</label>
+  <input type="text" class="form-control" placeholder="Username" name="username" value="{{request.form.username}}"><br><br>
+  <label class="form-field-title" for="password" style="font-size:120%; color:purple;%">Password:</label>
+  <input type="password" class="form-control" placeholder="Password" name="password" value="{{request.form.password}}"><br><br>
+  {% if  testname   %}
+    <button id="student" type="button" class="glyphicon glyphicon-lock" aria-hidden="true" style="height: 3em;" onclick="stud()">Student Login
+    </button>
+  &nbsp&nbsp
+  {%  endif %}
+    <button id="admin" type="submit" class="glyphicon glyphicon-lock" aria-hidden="true" style="height: 3em;" onclick="adm()">Admin Login
+    </button>
 </form>    
 </div>
 </form>
+<script>
+function stud()
+{
+  var form = document.getElementById("login");
+  form.action="/login/?testname={{ testname }}";
+  form.submit();
+}
+function adm()
+{
+  var form = document.getElementById("login");
+  form.action="/login/";
+  form.submit();
+}
+
+</script>
 {% endblock %}

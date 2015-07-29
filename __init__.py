@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, flash, session, redirect, request, jsonify
-from dbConnect import connection,questionEntry, userRegistrationInDatabase, submitScore, questionData
+from dbConnect import connection,questionEntry, userRegistrationInDatabase, submitScore, questionData, userLogin
 from wtforms import Form, TextField, PasswordField, BooleanField, StringField
 from wtforms.validators import Required, Length, EqualTo
 from datetime import datetime
@@ -67,22 +67,29 @@ def login():
     form2 = UserRegisteration(request.form)
     c,conn = connection()
     if request.method =='POST':
-      if c.execute("select * from users where username= '%s'" %(thwart(request.form['username']))):
-	data = c.execute("select * from users where username= '%s'" %(thwart(request.form['username'])))
-	data = c.fetchone()[1]
-	if sha256_crypt.verify(request.form['password'],data):
+      if request.args.get('testname'):
+	reply = userLogin(request.args.get('testname'), request.form['username'], request.form['password'])
+	if reply:
 	  session['logged_in'] = True
 	  session['username'] = request.form['username']
 	  flash('You are now logged in!')
 	  return redirect(url_for('dashboard'))
 	else:
 	  flash('Authentication failed')
+	
       else:
-	flash('Authentication failed')
-    
+	reply = userLogin("users", request.form['username'], request.form['password'])
+	if reply is True:
+	  session['logged_in'] = True
+	  session['username'] = request.form['username']
+	  session['admin'] = True
+	  flash('You are now logged in!')
+	  return redirect(url_for('dashboard'))
+	else:
+	  flash('Authentication failed')
     else:
       flash("Welcome to login page")
-    return render_template("login.html", form=form2)
+    return render_template("login.html", form=form2, testname=request.args.get('testname'))
   
   except Exception as e:
     return (str(e))
