@@ -2,12 +2,33 @@ import MySQLdb
 from MySQLdb import escape_string as thwart
 from passlib.hash import sha256_crypt
 import gc
+import csv
+import os
 
 def connection():
   conn =MySQLdb.connect(host='localhost', user='root', passwd='123456', db='users')
   c = conn.cursor()
   return c, conn
 
+def resultGeneration(testname):
+  try:
+    cursor,conn = connection()
+    databaseName = testname
+    databaseName = databaseName.replace(" ","")
+    cursor.execute("use %s ;" %databaseName)
+    conn.commit()
+    cursor.execute("select username, name, score, email from users")
+    with open(os.getcwd()+'/results/'+testname+'.csv', 'w') as f:
+      writer = csv.writer(f)
+      while True:
+	  row = cursor.fetchone()
+	  if row is None: break
+	  writer.writerow(row)
+    return "Result Generated Successfully"
+  
+  except Exception as e:
+    return str(e)
+      
 def userLogin(databaseName, username, password):
   try:
     c,conn = connection()
@@ -108,4 +129,4 @@ def questionData(id, databaseName):
   
 
 if __name__ == '__main__':
-  questionData('1',"Sample")
+  output("Practice Test")

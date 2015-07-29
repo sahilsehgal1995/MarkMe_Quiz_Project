@@ -20,6 +20,9 @@
   {% endif %}
   <td><a href="/register/{{ file }}"><input class="btn btn-warning" type="button" value="Register Test"></a></td>
   <td><a href="/login/?testname={{ file }}"><input class="btn btn-success" type="button" value="Login for Test"></a></td>
+  {% if session.admin %}
+  <td><a href="/results/{{ file }}"><input class="btn btn-default" type="button" value="Generate Result"></a></td>
+  {% endif %}
   </tr>
 {% endfor %}
 </table>

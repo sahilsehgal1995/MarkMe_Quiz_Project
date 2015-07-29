@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, flash, session, redirect, request, jsonify
-from dbConnect import connection,questionEntry, userRegistrationInDatabase, submitScore, questionData, userLogin
+from dbConnect import connection,questionEntry, userRegistrationInDatabase, submitScore, questionData, userLogin, resultGeneration
 from wtforms import Form, TextField, PasswordField, BooleanField, StringField
 from wtforms.validators import Required, Length, EqualTo
 from datetime import datetime
@@ -269,6 +269,16 @@ def delete_test(testname):
       flash("Unable to delete test")
     return redirect(url_for('test_list'))
     
+  except Exception as e:
+    return str(e)
+
+@app.route('/results/<testname>', methods=['GET', 'POST'])
+def result(testname):
+  try:
+    reply = resultGeneration(testname)
+    flash(reply)
+    return redirect(url_for('test_list'))
+  
   except Exception as e:
     return str(e)
 
