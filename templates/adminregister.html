@@ -1,0 +1,30 @@
+{% extends "header.html" %}
+
+{% block body %}
+<div class="container">
+<h2>Admin Registeration</h2>
+<form action="/adminregister/" class="form-inline" method="post">
+  <label class="form-field-title" for="username" style="font-size:120%; color:purple;%">Username:</label>
+    <input type="text" id="username" cols="20" rows="3" placeholder="Enter Username" name="username" value="" required>
+    <br><br>
+    <label class="form-field-title" for="name" style="font-size:120%; color:purple;%">Name:</label>
+    <input type="text" id="name" cols="20" rows="3" placeholder="Enter your Fullname" name="name" value="" required>
+    <br><br>
+    <label class="form-field-title" for="emailid" style="font-size:120%; color:purple;%">Email Id:</label>
+    <input type="email" id="emailid" cols="20" rows="3" placeholder="Enter Email ID" name="emailid" value="" required>
+    <br><br>
+    <label class="form-field-title" for="password" style="font-size:120%; color:purple;%">Password:</label>
+    <input type="password" id="password" cols="20" rows="3" placeholder="Enter Password" name="password" value="" required>
+    <br><br>
+    <label class="form-field-title" for="confirm" style="font-size:120%; color:purple;%">Confirm Password:</label>
+    <input type="password" id="confirm" cols="20" rows="3" placeholder="Enter Password again" name="confirm" value="" required>
+    <br><br>
+    <label class="form-field-title" for="regcode" style="font-size:120%; color:purple;%">Registeration Code:</label>
+    <input type="text" id="regcode" cols="20" rows="3" placeholder="Enter Registeration Code" name="regcode" value="" required>
+    <br><br>
+  <input class="btn btn-default" type="submit" value="Submit">
+</form>    
+</div>
+</form>
+{% endblock %}
+

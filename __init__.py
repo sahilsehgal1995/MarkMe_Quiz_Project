@@ -178,6 +178,34 @@ def register(testname):
   except Exception as e:
     return (str(e))
 
+@app.route('/adminregister/', methods=['GET', 'POST'])
+def adminRegisteration():
+  try:
+    if request.method == 'POST':
+      if request.form['regcode'] == 'ss123':
+	c, conn = connection()
+	testname = 'users'
+	c.execute("use %s ;" %testname)
+	conn.commit()
+	x = c.execute("select * from users where username = '%s'" %(thwart(request.form['username'])))
+	if int(x) > 0:
+	  flash("Oops!! That username already exists, Try something else")
+	  return render_template("adminregister.html")
+	else:
+	  databaseReply = userRegistrationInDatabase(testname, request.form['username'], request.form['password'],request.form['emailid'], request.form['name'])
+	  flash(databaseReply)
+	  session['logged_in'] = True
+	  session['username'] = request.form['username']
+	  return redirect(url_for('dashboard'))
+      else:
+	flash("Invalid Registeration Code")
+	return redirect(url_for('adminRegisteration'))
+    else:
+      return render_template("adminregister.html")
+    
+  except Exception as e:
+    return str(e)
+
 @app.route('/ques/', methods=['GET', 'POST'])
 @login_required
 def ajax():
