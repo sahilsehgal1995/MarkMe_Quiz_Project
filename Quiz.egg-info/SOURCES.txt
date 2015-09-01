@@ -1,0 +1,9 @@
+MANIFEST.in
+README.txt
+setup.py
+Quiz.egg-info/PKG-INFO
+Quiz.egg-info/SOURCES.txt
+Quiz.egg-info/dependency_links.txt
+Quiz.egg-info/entry_points.txt
+Quiz.egg-info/requires.txt
+Quiz.egg-info/top_level.txt

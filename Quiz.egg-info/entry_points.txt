@@ -1,0 +1,6 @@
+[console_scripts]
+run_server = food_trucks.scripts.run_server:run_server
+load_data = food_trucks.scripts.load_data:main
+dev_server = food_trucks.scripts.run_server:dev_server
+create_db = food_trucks.scripts.create_db:main
+

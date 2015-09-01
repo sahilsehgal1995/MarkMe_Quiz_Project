@@ -99,7 +99,6 @@ def login():
 def question_set(databasename):
   try:
     form = questions(request.form)
-    c,conn = connection()
     if request.method=='POST' and form.validate():
       databaseReply = questionEntry(databasename, form.qno.data, form.question.data, form.option1.data, form.option2.data, form.option3.data, form.option4.data, form.correct_answer.data)
       flash(databaseReply)
@@ -118,12 +117,11 @@ def taketest(testname):
     reply = TimeVerification(testname)
     if reply:
       session['testname']=testname
-      return render_template("tests/"+testname +".html")
+      return render_template("tests/"+testname +".html", )
     
     flash("Test is not available now")
     return render_template('dashboard.html')
     
-  
   except Exception as e:
     return (str(e))
   
@@ -137,8 +135,7 @@ def scoreSubmission():
       reply = TimeVerification(testname)
       if reply:
 	session['score'] = request.args.get('score')
-	session['username'] = request.args.get('username')
-	response = submitScore(testname, request.args.get('username'), request.args.get('score'))
+	response = submitScore(testname, session['username'], request.args.get('score'))
 	if response:
 	  return "Score Submitted Successfully"
 	else:
@@ -233,6 +230,7 @@ def ajax():
     return str(e)
   
 @app.route('/createtest/', methods=['GET','POST'])
+@login_required
 def createTest():
   try:
     if request.method == 'POST':
@@ -283,4 +281,4 @@ def result(testname):
     return str(e)
 
 if __name__=='__main__':
-  app.run()
+  app.run(host='172.16.230.1')

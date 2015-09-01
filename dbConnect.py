@@ -116,6 +116,7 @@ def submitScore(databaseName, username, score):
     c.execute("update users set score='%s' where username='%s'" %(thwart(score), thwart(username)))
     conn.commit()
     return True
+  
   except Exception as e:
     return False
 
@@ -129,4 +130,4 @@ def questionData(id, databaseName):
   
 
 if __name__ == '__main__':
-  output("Practice Test")
+  submitScore("ComputerArchitecture", "ue138001", '1' )
